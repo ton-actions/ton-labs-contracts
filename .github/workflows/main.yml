@@ -3,7 +3,7 @@ name: Main workflow
 on: [push,workflow_dispatch]
 
 jobs:          
-  install-n-tests:
+  build:
     runs-on: ubuntu-latest
     env:
       SOLC_HELP_REGEXP: "^solc, the Solidity commandline compiler.*$"
@@ -17,6 +17,11 @@ jobs:
         with:
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
         
-      - name: Tests tools
+      - name: Build SetcodeMultisigWallet.sol
         run: |  
           solc solidity/setcodemultisig/SetcodeMultisigWallet.sol
+          
+      - uses: actions/upload-artifact@v2
+        with:
+          name: SetcodeMultisigWallet
+          path: solidity/setcodemultisig/*
