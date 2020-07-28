@@ -18,10 +18,12 @@ jobs:
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
         
       - name: Build SetcodeMultisigWallet.sol
-        run: |  
-          solc solidity/setcodemultisig/SetcodeMultisigWallet.sol
+        run: |          
+          mkdir -p dist
+          cd dist
+          solc ../solidity/setcodemultisig/SetcodeMultisigWallet.sol
           
       - uses: actions/upload-artifact@v2
         with:
           name: SetcodeMultisigWallet
-          path: solidity/setcodemultisig/*
+          path: dist/
