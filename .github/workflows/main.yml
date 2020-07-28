@@ -1,0 +1,22 @@
+name: Main workflow
+
+on: [push,workflow_dispatch]
+
+jobs:          
+  install-n-tests:
+    runs-on: ubuntu-latest
+    env:
+      SOLC_HELP_REGEXP: "^solc, the Solidity commandline compiler.*$"
+      TONOS_CLI_HELP_REGEXP: "^.*TONLabs console tool for TON.*$"
+      TONOS_LINKER_HELP_REGEXP: "^.*Linker for TVM assembly.*$"
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+      
+      - uses: ton-actions/setup-tools@v1
+        with:
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+        
+      - name: Tests tools
+        run: |  
+          solc solidity/setcodemultisig/SetcodeMultisigWallet.sol
